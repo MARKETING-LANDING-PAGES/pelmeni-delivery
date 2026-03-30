@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title> Pelmeni Delivery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&family=Heebo:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F7F2EA;
+      --red: #B83232;
+      --red-dark: #8C2020;
+      --gold: #C8952A;
+      --deep: #1E1A18;
+      --warm-gray: #6B6560;
+      --card-bg: #FFFFFF;
+      --border: #E2D9CC;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--deep);
+      overflow-x: hidden;
+      direction: ltr;
+      text-align: left;
+    }
+
+    body.lang-he {
+      font-family: 'Heebo', sans-serif;
+      direction: rtl;
+      text-align: right;
+    }
+
+    /* ── LANG TOGGLE ── */
+    .lang-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: var(--deep);
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 0 2rem;
+      height: 44px;
+      direction: ltr;
+    }
+
+    .lang-toggle {
+      display: flex;
+      gap: 0;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,0.5);
+      padding: 6px 14px;
+      cursor: pointer;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: background 0.2s, color 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .lang-btn.active {
+      background: var(--red);
+      color: #fff;
+    }
+
+    .lang-btn:hover:not(.active) { color: #fff; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 44px;
+      left: 0;
+      right: 0;
+      z-index: 999;
+      background: rgba(247, 242, 234, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+      height: 56px;
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--red);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--warm-gray);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--red); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      padding-top: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 100%, rgba(184,50,50,0.12) 0%, transparent 70%),
+        var(--cream);
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '●';
+      position: absolute;
+      font-size: 28rem;
+      color: rgba(184,50,50,0.04);
+      top: -4rem;
+      right: -4rem;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .hero-inner { max-width: 680px; }
+
+    .hero-eyebrow {
+      display: inline-block;
+      background: var(--red);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      line-height: 1.08;
+      color: var(--deep);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 span { color: var(--red); }
+
+    .hero p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: var(--warm-gray);
+      margin-bottom: 2.5rem;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      background: var(--red);
+      color: #fff;
+      padding: 14px 32px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+
+    .btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); }
+
+    .btn-outline {
+      border: 2px solid var(--deep);
+      color: var(--deep);
+      padding: 13px 32px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: border-color 0.2s, color 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+
+    .btn-outline:hover { border-color: var(--red); color: var(--red); transform: translateY(-1px); }
+
+    .hero-badge {
+      margin-top: 3rem;
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-badge-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .hero-badge-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--red);
+    }
+
+    .hero-badge-label {
+      font-size: 0.78rem;
+      color: var(--warm-gray);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      text-align: center;
+      padding: 1rem 0;
+      color: var(--gold);
+      font-size: 1.2rem;
+      letter-spacing: 0.5em;
+      opacity: 0.6;
+    }
+
+    /* ── SECTION BASE ── */
+    section {
+      padding: 5rem 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      line-height: 1.15;
+      color: var(--deep);
+      margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      font-size: 1rem;
+      color: var(--warm-gray);
+      line-height: 1.7;
+      max-width: 540px;
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .about-image-block { position: relative; }
+
+    .about-img-placeholder {
+      background: linear-gradient(135deg, #e8d5c0 0%, #d4b896 100%);
+      border-radius: 16px;
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-img-placeholder::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(30,26,24,0.15) 100%);
+      border-radius: 16px;
+    }
+
+    .about-tag {
+      position: absolute;
+      bottom: -1.2rem;
+      right: -1.2rem;
+      background: var(--red);
+      color: #fff;
+      padding: 1rem 1.4rem;
+      border-radius: 12px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      box-shadow: 0 8px 24px rgba(184,50,50,0.3);
+    }
+
+    .about-features {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      margin-top: 2rem;
+    }
+
+    .about-feature {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .feature-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(184,50,50,0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .feature-text strong {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--deep);
+      margin-bottom: 0.15rem;
+    }
+
+    .feature-text span {
+      font-size: 0.83rem;
+      color: var(--warm-gray);
+      line-height: 1.5;
+    }
+
+    /* ── MENU / PRICES ── */
+    .menu-section {
+      background: var(--deep);
+      color: #fff;
+      max-width: 100%;
+      padding: 5rem 1.5rem;
+    }
+
+    .menu-inner { max-width: 1100px; margin: 0 auto; }
+
+    .menu-section .section-label { color: var(--gold); }
+    .menu-section .section-title { color: #fff; }
+    .menu-section .section-sub { color: rgba(255,255,255,0.6); }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .menu-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      padding: 1.8rem;
+      transition: background 0.2s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .menu-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-3px); }
+
+    .menu-card.featured {
+      border-color: var(--gold);
+      background: rgba(200,149,42,0.08);
+    }
+
+    .menu-card-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: var(--gold);
+      color: var(--deep);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+
+    .menu-card-emoji { font-size: 2rem; margin-bottom: 1rem; }
+
+    .menu-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .menu-card p {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.6;
+      margin-bottom: 1.2rem;
+    }
+
+    .menu-card-price { display: flex; align-items: baseline; gap: 0.3rem; }
+
+    .price-main {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .price-unit { font-size: 0.78rem; color: rgba(255,255,255,0.4); }
+
+    /* ── HOW IT WORKS ── */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .step { text-align: center; }
+
+    .step-num {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--red);
+      color: #fff;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+    }
+
+    .step h4 { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--deep); }
+    .step p { font-size: 0.83rem; color: var(--warm-gray); line-height: 1.6; }
+
+    /* ── CONTACT ── */
+    .contact-section {
+      background: linear-gradient(135deg, #fff 0%, var(--cream) 100%);
+      max-width: 100%;
+      padding: 5rem 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .contact-details { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2.5rem; }
+
+    .contact-item { display: flex; gap: 1rem; align-items: flex-start; }
+
+    .contact-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(184,50,50,0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .contact-item-text strong {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      margin-bottom: 0.2rem;
+    }
+
+    .contact-item-text a,
+    .contact-item-text span {
+      font-size: 0.95rem;
+      color: var(--deep);
+      font-weight: 500;
+      text-decoration: none;
+      line-height: 1.5;
+    }
+
+    .contact-item-text a:hover { color: var(--red); }
+
+    .contact-form {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+    }
+
+    .contact-form h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      color: var(--deep);
+    }
+
+    .form-group { margin-bottom: 1rem; }
+
+    .form-group label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--warm-gray);
+      margin-bottom: 0.4rem;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      color: var(--deep);
+      background: var(--cream);
+      transition: border-color 0.2s;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus { border-color: var(--red); }
+
+    .form-group textarea { resize: vertical; min-height: 90px; }
+
+    .form-submit {
+      width: 100%;
+      background: var(--red);
+      color: #fff;
+      border: none;
+      padding: 13px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.2s;
+    }
+
+    .form-submit:hover { background: var(--red-dark); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--deep);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 2rem 1.5rem;
+      font-size: 0.82rem;
+    }
+
+    footer strong { color: rgba(255,255,255,0.8); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-tag { right: 0; }
+      .nav-links { display: none; }
+    }
+
+    /* ── LANG VISIBILITY ── */
+    [data-lang] { display: none; }
+    body.lang-en [data-lang="en"] { display: revert; }
+    body.lang-ru [data-lang="ru"] { display: revert; }
+    body.lang-he [data-lang="he"] { display: revert; }
+
+    span[data-lang] { display: none; }
+    body.lang-en span[data-lang="en"] { display: inline; }
+    body.lang-ru span[data-lang="ru"] { display: inline; }
+    body.lang-he span[data-lang="he"] { display: inline; }
+  </style>
+</head>
+<body class="lang-en">
+
+  <!-- LANG BAR -->
+  <div class="lang-bar">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="btn-ru" onclick="setLang('ru')">RU</button>
+      <button class="lang-btn" id="btn-he" onclick="setLang('he')">עב</button>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">Пельмени</a>
+    <ul class="nav-links">
+      <li>
+        <a href="#about" data-lang="en">About</a>
+        <a href="#about" data-lang="ru">О нас</a>
+        <a href="#about" data-lang="he">אודות</a>
+      </li>
+      <li>
+        <a href="#menu" data-lang="en">Menu &amp; Prices</a>
+        <a href="#menu" data-lang="ru">Меню и цены</a>
+        <a href="#menu" data-lang="he">תפריט ומחירים</a>
+      </li>
+      <li>
+        <a href="#how" data-lang="en">How to Order</a>
+        <a href="#how" data-lang="ru">Как заказать</a>
+        <a href="#how" data-lang="he">איך להזמין</a>
+      </li>
+      <li>
+        <a href="#contact" data-lang="en">Contact</a>
+        <a href="#contact" data-lang="ru">Контакты</a>
+        <a href="#contact" data-lang="he">צור קשר</a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">
+        <span data-lang="en">Fresh · Homemade · Delivered</span>
+        <span data-lang="ru">Свежие · Домашние · С доставкой</span>
+        <span data-lang="he">טרי · ביתי · עם משלוח</span>
+      </div>
+      <h1>
+        <span data-lang="en">Real Russian<br><span>Pelmeni</span>,<br>Delivered Hot</span>
+        <span data-lang="ru">Настоящие<br>домашние<br><span>пельмени</span></span>
+        <span data-lang="he">פלמני רוסי אמיתי,<br><span>טרי וחם</span><br>עד הדלת</span>
+      </h1>
+      <p>
+        <span data-lang="en">Hand-crafted with love using grandmother's recipe. Made fresh daily and delivered straight to your door.</span>
+        <span data-lang="ru">Лепим вручную по бабушкиному рецепту. Готовим свежими каждый день и доставляем прямо к вашей двери.</span>
+        <span data-lang="he">עשוי ביד עם אהבה לפי מתכון של סבתא. מוכן טרי מדי יום ומגיע ישירות לדלת שלך.</span>
+      </p>
+      <div class="hero-cta">
+        <a href="#menu" class="btn-primary">
+          <span data-lang="en">See the Menu</span>
+          <span data-lang="ru">Смотреть меню</span>
+          <span data-lang="he">לתפריט</span>
+        </a>
+        <a href="#contact" class="btn-outline">
+          <span data-lang="en">Order Now</span>
+          <span data-lang="ru">Заказать</span>
+          <span data-lang="he">הזמן עכשיו</span>
+        </a>
+      </div>
+      <div class="hero-badge">
+        <div class="hero-badge-item">
+          <div class="hero-badge-num">100%</div>
+          <div class="hero-badge-label">
+            <span data-lang="en">Homemade</span>
+            <span data-lang="ru">Домашнее</span>
+            <span data-lang="he">ביתי</span>
+          </div>
+        </div>
+        <div class="hero-badge-item">
+          <div class="hero-badge-num">500+</div>
+          <div class="hero-badge-label">
+            <span data-lang="en">Happy Customers</span>
+            <span data-lang="ru">Довольных клиентов</span>
+            <span data-lang="he">לקוחות מרוצים</span>
+          </div>
+        </div>
+        <div class="hero-badge-item">
+          <div class="hero-badge-num">1–2h</div>
+          <div class="hero-badge-label">
+            <span data-lang="en">Delivery</span>
+            <span data-lang="ru">Доставка</span>
+            <span data-lang="he">משלוח</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider">✦ ✦ ✦</div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-image-block">
+        <div class="about-img-placeholder">🥟</div>
+        <div class="about-tag">
+          <span data-lang="en">Since 2018</span>
+          <span data-lang="ru">С 2018 года</span>
+          <span data-lang="he">מאז 2018</span>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">
+          <span data-lang="en">Our Story</span>
+          <span data-lang="ru">Наша история</span>
+          <span data-lang="he">הסיפור שלנו</span>
+        </div>
+        <h2 class="section-title">
+          <span data-lang="en">Made the way Grandma taught us</span>
+          <span data-lang="ru">Так, как учила бабушка</span>
+          <span data-lang="he">עשוי כמו שסבתא לימדה אותנו</span>
+        </h2>
+        <p class="section-sub">
+          <span data-lang="en">We started in a small kitchen with a family recipe passed down three generations. Every pelmeni is pinched by hand, stuffed generously, and made with nothing but real ingredients — no fillers, no shortcuts.</span>
+          <span data-lang="ru">Мы начали на маленькой кухне с семейным рецептом, который передавался три поколения. Каждый пельмень лепится вручную, наполняется щедро и готовится только из настоящих ингредиентов — без наполнителей и без компромиссов.</span>
+          <span data-lang="he">התחלנו במטבח קטן עם מתכון משפחתי שעבר שלושה דורות. כל פלמן נסגר ביד, ממולא בנדיבות ומוכן רק מרכיבים אמיתיים — בלי מילויים, בלי קיצורי דרך.</span>
+        </p>
+        <div class="about-features">
+          <div class="about-feature">
+            <div class="feature-icon">🌾</div>
+            <div class="feature-text">
+              <strong>
+                <span data-lang="en">Fresh Ingredients Only</span>
+                <span data-lang="ru">Только свежие продукты</span>
+                <span data-lang="he">רק מרכיבים טריים</span>
+              </strong>
+              <span>
+                <span data-lang="en">We source local meat and make the dough from scratch every morning.</span>
+                <span data-lang="ru">Мясо от местных поставщиков, тесто замешиваем каждое утро.</span>
+                <span data-lang="he">בשר מספקים מקומיים ובצק מוכן מאפס כל בוקר.</span>
+              </span>
+            </div>
+          </div>
+          <div class="about-feature">
+            <div class="feature-icon">❄️</div>
+            <div class="feature-text">
+              <strong>
+                <span data-lang="en">Fresh or Frozen</span>
+                <span data-lang="ru">Свежие или замороженные</span>
+                <span data-lang="he">טרי או קפוא</span>
+              </strong>
+              <span>
+                <span data-lang="en">Order ready-to-cook fresh, or get a frozen batch to keep in your freezer.</span>
+                <span data-lang="ru">Закажите готовые к варке свежие или замороженную партию про запас.</span>
+                <span data-lang="he">הזמן טרי מוכן לבישול, או קבל מנה קפואה לשמור במקפיא.</span>
+              </span>
+            </div>
+          </div>
+          <div class="about-feature">
+            <div class="feature-icon">🚗</div>
+            <div class="feature-text">
+              <strong>
+                <span data-lang="en">Fast Local Delivery</span>
+                <span data-lang="ru">Быстрая местная доставка</span>
+                <span data-lang="he">משלוח מקומי מהיר</span>
+              </strong>
+              <span>
+                <span data-lang="en">We deliver within the city. Orders placed before 2 PM arrive the same day.</span>
+                <span data-lang="ru">Доставляем по городу. Заказы до 14:00 — в тот же день.</span>
+                <span data-lang="he">אנחנו מוסרים בתוך העיר. הזמנות עד 14:00 מגיעות באותו היום.</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU & PRICES -->
+  <div class="menu-section" id="menu">
+    <div class="menu-inner">
+      <div class="section-label">
+        <span data-lang="en">Menu &amp; Prices</span>
+        <span data-lang="ru">Меню и цены</span>
+        <span data-lang="he">תפריט ומחירים</span>
+      </div>
+      <h2 class="section-title">
+        <span data-lang="en">Pick your filling</span>
+        <span data-lang="ru">Выберите начинку</span>
+        <span data-lang="he">בחר את המילוי שלך</span>
+      </h2>
+      <p class="section-sub">
+        <span data-lang="en">All pelmeni are sold in packs of 30 pieces. Mix and match fillings when ordering 2+ packs.</span>
+        <span data-lang="ru">Пельмени продаются упаковками по 30 штук. При заказе от 2 упаковок можно комбинировать начинки.</span>
+        <span data-lang="he">כל הפלמני נמכרים בחבילות של 30 יחידות. ניתן לשלב מילויים בהזמנה של 2 חבילות ומעלה.</span>
+      </p>
+      <div class="menu-grid">
+
+        <div class="menu-card featured">
+          <div class="menu-card-badge">
+            <span data-lang="en">Best Seller</span>
+            <span data-lang="ru">Хит продаж</span>
+            <span data-lang="he">הנמכר ביותר</span>
+          </div>
+          <div class="menu-card-emoji">🥩</div>
+          <h3>
+            <span data-lang="en">Classic Beef &amp; Pork</span>
+            <span data-lang="ru">Классические говядина и свинина</span>
+            <span data-lang="he">בקר וחזיר קלאסי</span>
+          </h3>
+          <p>
+            <span data-lang="en">The original. A 50/50 blend of beef and pork with onion, black pepper, and a pinch of nutmeg.</span>
+            <span data-lang="ru">Классика. Смесь говядины и свинины 50/50 с луком, чёрным перцем и щепоткой мускатного ореха.</span>
+            <span data-lang="he">המקורי. תערובת 50/50 של בקר וחזיר עם בצל, פלפל שחור וקמצוץ אגוז מוסקט.</span>
+          </p>
+          <div class="menu-card-price">
+            <span class="price-main">$18</span>
+            <span class="price-unit">
+              <span data-lang="en">/ 30 pcs</span>
+              <span data-lang="ru">/ 30 шт</span>
+              <span data-lang="he">/ 30 יח׳</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-card-emoji">🍗</div>
+          <h3>
+            <span data-lang="en">Chicken &amp; Herb</span>
+            <span data-lang="ru">Куриные с зеленью</span>
+            <span data-lang="he">עוף ועשבי תיבול</span>
+          </h3>
+          <p>
+            <span data-lang="en">Tender minced chicken with fresh dill, parsley, and garlic. Light and fragrant.</span>
+            <span data-lang="ru">Нежный куриный фарш со свежим укропом, петрушкой и чесноком. Лёгкие и ароматные.</span>
+            <span data-lang="he">עוף טחון עדין עם שמיר טרי, פטרוזיליה ושום. קל וריחני.</span>
+          </p>
+          <div class="menu-card-price">
+            <span class="price-main">$16</span>
+            <span class="price-unit">
+              <span data-lang="en">/ 30 pcs</span>
+              <span data-lang="ru">/ 30 шт</span>
+              <span data-lang="he">/ 30 יח׳</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-card-emoji">🧅</div>
+          <h3>
+            <span data-lang="en">Potato &amp; Caramelised Onion</span>
+            <span data-lang="ru">Картофель с карамелизованным луком</span>
+            <span data-lang="he">תפוח אדמה עם בצל מקורמל</span>
+          </h3>
+          <p>
+            <span data-lang="en">A comforting vegetarian option. Creamy mashed potato with slow-cooked sweet onion.</span>
+            <span data-lang="ru">Уютный вегетарианский вариант. Нежное картофельное пюре с медленно томлёным сладким луком.</span>
+            <span data-lang="he">אפשרות צמחונית מנחמת. פירה קרמי עם בצל מתוק מבושל לאט.</span>
+          </p>
+          <div class="menu-card-price">
+            <span class="price-main">$14</span>
+            <span class="price-unit">
+              <span data-lang="en">/ 30 pcs</span>
+              <span data-lang="ru">/ 30 шт</span>
+              <span data-lang="he">/ 30 יח׳</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-card-emoji">🐟</div>
+          <h3>
+            <span data-lang="en">Salmon &amp; Cream Cheese</span>
+            <span data-lang="ru">Лосось со сливочным сыром</span>
+            <span data-lang="he">סלמון עם גבינת שמנת</span>
+          </h3>
+          <p>
+            <span data-lang="en">A delicate, modern twist. Fresh salmon fillet with cream cheese and lemon zest.</span>
+            <span data-lang="ru">Деликатный современный вариант. Свежее филе лосося со сливочным сыром и лимонной цедрой.</span>
+            <span data-lang="he">גרסה עדינה ומודרנית. פילה סלמון טרי עם גבינת שמנת וגרידת לימון.</span>
+          </p>
+          <div class="menu-card-price">
+            <span class="price-main">$22</span>
+            <span class="price-unit">
+              <span data-lang="en">/ 30 pcs</span>
+              <span data-lang="ru">/ 30 шт</span>
+              <span data-lang="he">/ 30 יח׳</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-card-emoji">🫙</div>
+          <h3>
+            <span data-lang="en">Family Pack — Mixed</span>
+            <span data-lang="ru">Семейный набор — ассорти</span>
+            <span data-lang="he">מארז משפחתי — אסורטי</span>
+          </h3>
+          <p>
+            <span data-lang="en">90 pcs of your choice of two fillings. Perfect for a family dinner or stocking the freezer.</span>
+            <span data-lang="ru">90 штук на выбор из двух начинок. Идеально для семейного ужина или заморозки.</span>
+            <span data-lang="he">90 יחידות לבחירתך מ-2 מילויים. מושלם לארוחת משפחה או לאחסון במקפיא.</span>
+          </p>
+          <div class="menu-card-price">
+            <span class="price-main">$48</span>
+            <span class="price-unit">
+              <span data-lang="en">/ 90 pcs</span>
+              <span data-lang="ru">/ 90 шт</span>
+              <span data-lang="he">/ 90 יח׳</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-card-emoji">🧊</div>
+          <h3>
+            <span data-lang="en">Frozen Bulk — 200 pcs</span>
+            <span data-lang="ru">Заморозка оптом — 200 шт</span>
+            <span data-lang="he">הקפאה בכמות — 200 יח׳</span>
+          </h3>
+          <p>
+            <span data-lang="en">Stock up! Choose up to three fillings. Best value — ideal for restaurants and bulk orders.</span>
+            <span data-lang="ru">Закупитесь впрок! До трёх видов начинки. Лучшая цена — для ресторанов и оптовых заказов.</span>
+            <span data-lang="he">תתאחסנו! עד שלושה מילויים לבחירה. הערך הטוב ביותר — אידיאלי למסעדות והזמנות בכמות.</span>
+          </p>
+          <div class="menu-card-price">
+            <span class="price-main">$110</span>
+            <span class="price-unit">
+              <span data-lang="en">/ 200 pcs</span>
+              <span data-lang="ru">/ 200 шт</span>
+              <span data-lang="he">/ 200 יח׳</span>
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW TO ORDER -->
+  <section id="how">
+    <div style="text-align:center; max-width:600px; margin:0 auto 1rem;">
+      <div class="section-label">
+        <span data-lang="en">How It Works</span>
+        <span data-lang="ru">Как это работает</span>
+        <span data-lang="he">איך זה עובד</span>
+      </div>
+      <h2 class="section-title">
+        <span data-lang="en">Order in 3 simple steps</span>
+        <span data-lang="ru">Заказ в 3 простых шага</span>
+        <span data-lang="he">הזמן ב-3 צעדים פשוטים</span>
+      </h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h4>
+          <span data-lang="en">Choose your filling</span>
+          <span data-lang="ru">Выберите начинку</span>
+          <span data-lang="he">בחר את המילוי שלך</span>
+        </h4>
+        <p>
+          <span data-lang="en">Browse the menu and pick the pelmeni you want. Mix fillings on larger orders.</span>
+          <span data-lang="ru">Просмотрите меню и выберите нужные пельмени. В больших заказах можно смешивать начинки.</span>
+          <span data-lang="he">עיין בתפריט ובחר את הפלמני הרצויים. ניתן לשלב מילויים בהזמנות גדולות.</span>
+        </p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h4>
+          <span data-lang="en">Contact us to order</span>
+          <span data-lang="ru">Свяжитесь с нами</span>
+          <span data-lang="he">צור איתנו קשר</span>
+        </h4>
+        <p>
+          <span data-lang="en">Send a WhatsApp or use the order form below. We confirm within 30 minutes.</span>
+          <span data-lang="ru">Напишите в WhatsApp или заполните форму ниже. Подтверждаем в течение 30 минут.</span>
+          <span data-lang="he">שלח וואטסאפ או השתמש בטופס ההזמנה למטה. אנחנו מאשרים תוך 30 דקות.</span>
+        </p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h4>
+          <span data-lang="en">Get it delivered</span>
+          <span data-lang="ru">Получите доставку</span>
+          <span data-lang="he">קבל את המשלוח</span>
+        </h4>
+        <p>
+          <span data-lang="en">We deliver fresh or frozen, same day for orders before 2 PM. Pay on delivery.</span>
+          <span data-lang="ru">Доставляем свежими или замороженными, в тот же день при заказе до 14:00. Оплата при получении.</span>
+          <span data-lang="he">אנחנו מוסרים טרי או קפוא, באותו היום להזמנות עד 14:00. תשלום עם קבלת ההזמנה.</span>
+        </p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h4>
+          <span data-lang="en">Enjoy!</span>
+          <span data-lang="ru">Наслаждайтесь!</span>
+          <span data-lang="he">!בתיאבון</span>
+        </h4>
+        <p>
+          <span data-lang="en">Boil for 7–8 minutes, serve with sour cream, butter, or broth. Приятного аппетита!</span>
+          <span data-lang="ru">Варите 7–8 минут, подавайте со сметаной, маслом или в бульоне. Приятного аппетита!</span>
+          <span data-lang="he">בשלו 7–8 דקות, הגישו עם שמנת חמוצה, חמאה או ציר. !פריאטנוגו אפטיטה</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <div class="contact-section" id="contact">
+    <div class="contact-inner">
+      <div>
+        <div class="section-label">
+          <span data-lang="en">Get in Touch</span>
+          <span data-lang="ru">Контакты</span>
+          <span data-lang="he">צור קשר</span>
+        </div>
+        <h2 class="section-title">
+          <span data-lang="en">We'd love to hear from you</span>
+          <span data-lang="ru">Рады вашему обращению</span>
+          <span data-lang="he">נשמח לשמוע ממך</span>
+        </h2>
+        <p class="section-sub">
+          <span data-lang="en">Reach out on WhatsApp for the fastest response. We're available every day from 9 AM to 8 PM.</span>
+          <span data-lang="ru">Пишите в WhatsApp — отвечаем быстрее всего. Работаем ежедневно с 9:00 до 20:00.</span>
+          <span data-lang="he">פנה אלינו בוואטסאפ לתגובה המהירה ביותר. אנחנו זמינים כל יום מ-9:00 עד 20:00.</span>
+        </p>
+        <div class="contact-details">
+          <div class="contact-item">
+            <div class="contact-icon">📱</div>
+            <div class="contact-item-text">
+              <strong>WhatsApp</strong>
+              <a href="https://wa.me/15551234567">+1 (555) 123-4567</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📧</div>
+            <div class="contact-item-text">
+              <strong>Email</strong>
+              <a href="mailto:hello@pelmenidelivery.com">hello@pelmenidelivery.com</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div class="contact-item-text">
+              <strong>
+                <span data-lang="en">Delivery Area</span>
+                <span data-lang="ru">Зона доставки</span>
+                <span data-lang="he">אזור משלוח</span>
+              </strong>
+              <span>
+                <span data-lang="en">City-wide delivery. Free delivery on orders over $50.</span>
+                <span data-lang="ru">Доставка по всему городу. Бесплатно при заказе от 50$.</span>
+                <span data-lang="he">משלוח בכל העיר. משלוח חינם בהזמנות מעל $50.</span>
+              </span>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">🕐</div>
+            <div class="contact-item-text">
+              <strong>
+                <span data-lang="en">Hours</span>
+                <span data-lang="ru">Часы работы</span>
+                <span data-lang="he">שעות פעילות</span>
+              </strong>
+              <span>
+                <span data-lang="en">Mon–Sun · 9:00 AM – 8:00 PM</span>
+                <span data-lang="ru">Пн–Вс · 9:00 – 20:00</span>
+                <span data-lang="he">א׳–ש׳ · 9:00 – 20:00</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <h3>
+          <span data-lang="en">Place an Order</span>
+          <span data-lang="ru">Оформить заказ</span>
+          <span data-lang="he">שלח הזמנה</span>
+        </h3>
+        <div class="form-group">
+          <label>
+            <span data-lang="en">Your Name</span>
+            <span data-lang="ru">Ваше имя</span>
+            <span data-lang="he">שמך</span>
+          </label>
+          <input type="text" placeholder="">
+        </div>
+        <div class="form-group">
+          <label>
+            <span data-lang="en">Phone / WhatsApp</span>
+            <span data-lang="ru">Телефон / WhatsApp</span>
+            <span data-lang="he">טלפון / וואטסאפ</span>
+          </label>
+          <input type="tel" placeholder="">
+        </div>
+        <div class="form-group">
+          <label>
+            <span data-lang="en">Delivery Address</span>
+            <span data-lang="ru">Адрес доставки</span>
+            <span data-lang="he">כתובת למשלוח</span>
+          </label>
+          <input type="text" placeholder="">
+        </div>
+        <div class="form-group">
+          <label>
+            <span data-lang="en">Order Details</span>
+            <span data-lang="ru">Детали заказа</span>
+            <span data-lang="he">פרטי הזמנה</span>
+          </label>
+          <textarea placeholder=""></textarea>
+        </div>
+        <button class="form-submit">
+          <span data-lang="en">Send Order Request</span>
+          <span data-lang="ru">Отправить заявку</span>
+          <span data-lang="he">שלח בקשת הזמנה</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>
+      <strong>Пельмени Delivery</strong> &nbsp;·&nbsp;
+      <span data-lang="en">Handmade with love. Delivered with care.</span>
+      <span data-lang="ru">Лепим с душой. Доставляем с заботой.</span>
+      <span data-lang="he">עשוי ביד עם אהבה. מסופק עם אכפתיות.</span>
+    </p>
+    <p style="margin-top:0.5rem;">
+      <span data-lang="en">© 2026 · All rights reserved</span>
+      <span data-lang="ru">© 2026 · Все права защищены</span>
+      <span data-lang="he">© 2026 · כל הזכויות שמורות</span>
+    </p>
+  </footer>
+
+  <script>
+    function setLang(lang) {
+      document.body.className = 'lang-' + lang;
+      ['en', 'ru', 'he'].forEach(function(l) {
+        document.getElementById('btn-' + l).classList.toggle('active', l === lang);
+      });
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
+    }
+  </script>
+
+</body>
+</html>
